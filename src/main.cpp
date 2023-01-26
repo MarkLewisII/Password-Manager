@@ -2,39 +2,65 @@
 #################################
 # Author: Mark Lewis            #
 # Date Started : 23 / 01 / 23   #
-# Last Edit : 24 / 01 / 23      #
+# Last Edit : 26 / 01 / 23      #
 #################################
 */
 
 #include <iostream>
 #include <cstdlib>
 #include <string>
+#include <ctime>
+#include <vector>
 
 using namespace std;
-string GeneratePassword();
+// string GeneratePassword(int);
+void GeneratePassword(int);
+void test();
+
 
 int main()
 {
-    string pass = "";
-    int again = 0;
-    do
+    // string pass = "test";
+
+    int passLength = 0;
+
+    // Read the service and username / Emaill that the password is to be assigned to
+
+    cout << "Enter the desired legnth for your password." << endl;
+    cin >> passLength;
+
+    if (passLength <= 0)
     {
-
-    pass = GeneratePassword();
-    cout << "Password = " << pass << endl;
-    cin >> again;
-    } while (again == 1);
-
+        cout << "Error: Password length must be greaer than 1." << endl;
+    }
+    else
+    {
+        cout << "Password = ";
+        GeneratePassword(passLength);
+        cout << endl;
+        test();
+    }
 
     return 0;
 }
 
-// Create Accoun start
+// void test() 
+// {
+//     main();
+// }
+
+// Create Account start
 
 // Generate passwords
-string GeneratePassword()
+
+// string GeneratePassword(int passLength)
+void GeneratePassword(int passLength)
+
 {
-    char password[12] = {};
+    // const int passwordLength = passLength;
+    // string password;
+    char password[256] = {};//Fid a better way to handle the size of this array to save on memoy usage
+
     char characters[78] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
                            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
                            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -42,16 +68,22 @@ string GeneratePassword()
 
     int index;
 
-    for (int i = 0; i < sizeof(password); i++)
+    srand(time(0)); // Uses current time as a seed for the random character selection
+
+    for (int i = 0; i < passLength; i++)
     {
         index = rand() % sizeof(characters);
         password[i] = characters[index];
     }
 
-    return password;
+    for (int j = 0; j < passLength; j++)
+    {
+        cout << password[j];
+    }
+
+    // return password;
 }
-// Check passwords against dictionary
-// Read the service and username / Emaill that the password is to be assigned to
+
 // store all information to a structured file.
 
 // Create account end
@@ -72,7 +104,7 @@ string GeneratePassword()
 
 // Delete account end
 
-// View Existing accoutns start
+// View Existing acstd::coutns start
 
 // Read password file
 // Display information in file as a structured table
