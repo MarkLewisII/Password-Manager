@@ -23,7 +23,3 @@ Software that generates random, secure passwords and stores them in a local file
 -   Ability to customize the length of the password that is generated
 -   Store generated passwords alongside other information needed for that account.
 ---
-
-## Tutorial
-<!-- Add tutorial -->
----
