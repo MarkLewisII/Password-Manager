@@ -2,7 +2,7 @@
 #################################
 # Author: Mark Lewis            #
 # Date Started : 23 / 01 / 23   #
-# Last Edit : 29 / 01 / 23      #
+# Last Edit : 30 / 01 / 23      #
 #################################
 */
 
@@ -14,21 +14,19 @@
 
 using namespace std;
 
-
 class Entry
 {
 public:
-    string Service;
-    string Email;
-    string Username;
+    string Service = " ";
+    string Email = " ";
+    string Username = " ";
     string Password;
-
 };
 
 string GeneratePassword(const int);
 void WriteDataToFile(Entry currentEntry);
 
-void test(); // Disposable test function for looping 
+void test(); // Disposable test function for looping
 
 int main()
 {
@@ -68,7 +66,6 @@ int main()
 void WriteDataToFile(Entry currentEntry)
 {
     fstream PasswordTest; // Temp file name
-    // string temp_s;
 
     PasswordTest.open("PasswordTest.txt", ios::app); // Open password file
     if (!PasswordTest)
@@ -80,7 +77,6 @@ void WriteDataToFile(Entry currentEntry)
         cout << "File creation / openning was successful!" << endl;
     }
 
-    // PasswordTest << currentEntry.Password << endl;
     PasswordTest << "Service --> " << currentEntry.Service << endl
                  << "Email --> " << currentEntry.Email << endl
                  << "Username --> " << currentEntry.Username << endl

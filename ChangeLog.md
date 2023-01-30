@@ -1,12 +1,12 @@
 # Change Log
 
-## [0.1] - 2023-01-24
+## [0.1.1] - 2023-01-24
 
 ### Added
 
 -   Random 12 digit password generation.
 
-## [0.1.1] - 2023-01-26
+## [0.1.2] - 2023-01-26
 
 ### Added
 
@@ -16,13 +16,13 @@
 
 -   Character choice now uses the current system time as a seed for random selection.
 
-## [0.1.2] - 2023-01-26
+## [0.1.3] - 2023-01-26
 
 ### Added
 
 -   Abiltiy to write generated data to file.
 
-## [0.1.3] - 2023-01-29
+## [0.2.1] - 2023-01-29
 
 ## Added
 
