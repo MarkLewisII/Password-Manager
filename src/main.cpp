@@ -2,7 +2,7 @@
 #################################
 # Author: Mark Lewis            #
 # Date Started : 23 / 01 / 23   #
-# Last Edit : 26 / 01 / 23      #
+# Last Edit : 29 / 01 / 23      #
 #################################
 */
 
@@ -10,21 +10,42 @@
 #include <cstdlib>
 #include <string>
 #include <ctime>
-#include <vector>
+#include <fstream>
 
 using namespace std;
-// string GeneratePassword(int);
-void GeneratePassword(int);
-void test();
 
+
+class Entry
+{
+public:
+    string Service;
+    string Email;
+    string Username;
+    string Password;
+
+};
+
+string GeneratePassword(const int);
+void WriteDataToFile(Entry currentEntry);
+
+void test(); // Disposable test function for looping 
 
 int main()
 {
-    // string pass = "test";
+    Entry currentEntry;
 
     int passLength = 0;
 
     // Read the service and username / Emaill that the password is to be assigned to
+
+    cout << "Enter the service that this account belongs to." << endl;
+    cin >> currentEntry.Service;
+
+    cout << "Enter the  email address used with this acount." << endl;
+    cin >> currentEntry.Email;
+
+    cout << "Enter the  usesrname for this acount." << endl;
+    cin >> currentEntry.Username;
 
     cout << "Enter the desired legnth for your password." << endl;
     cin >> passLength;
@@ -35,54 +56,68 @@ int main()
     }
     else
     {
-        cout << "Password = ";
-        GeneratePassword(passLength);
-        cout << endl;
+        currentEntry.Password = GeneratePassword(passLength);
+        WriteDataToFile(currentEntry);
+
         test();
     }
 
     return 0;
 }
 
-// void test() 
-// {
-//     main();
-// }
-
-// Create Account start
-
-// Generate passwords
-
-// string GeneratePassword(int passLength)
-void GeneratePassword(int passLength)
-
+void WriteDataToFile(Entry currentEntry)
 {
-    // const int passwordLength = passLength;
-    // string password;
-    char password[256] = {};//Fid a better way to handle the size of this array to save on memoy usage
+    fstream PasswordTest; // Temp file name
+    // string temp_s;
+
+    PasswordTest.open("PasswordTest.txt", ios::app); // Open password file
+    if (!PasswordTest)
+    {
+        cout << "Error creating / openning file." << endl;
+    }
+    else
+    {
+        cout << "File creation / openning was successful!" << endl;
+    }
+
+    // PasswordTest << currentEntry.Password << endl;
+    PasswordTest << "Service --> " << currentEntry.Service << endl
+                 << "Email --> " << currentEntry.Email << endl
+                 << "Username --> " << currentEntry.Username << endl
+                 << "Password --> " << currentEntry.Password << endl
+                 << "==============================================" << endl;
+
+    PasswordTest.close(); // Close oppened password file
+}
+
+void test()
+{
+    main();
+}
+
+string GeneratePassword(const int passLength)
+{
+    string password;
+    password.reserve(passLength);
 
     char characters[78] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
                            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
                            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
                            '!', '(', ')', '[', ']', '?', '`', '~', ';', ':', '#', '$', '%', '^', '&', '*'};
 
-    int index;
-
     srand(time(0)); // Uses current time as a seed for the random character selection
 
     for (int i = 0; i < passLength; i++)
     {
-        index = rand() % sizeof(characters);
-        password[i] = characters[index];
+        password += characters[rand() % sizeof(characters)];
     }
 
-    for (int j = 0; j < passLength; j++)
-    {
-        cout << password[j];
-    }
-
-    // return password;
+    return password;
 }
+
+// Create Account start
+
+// Generate passwords
 
 // store all information to a structured file.
 
