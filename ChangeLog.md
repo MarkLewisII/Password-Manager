@@ -24,7 +24,17 @@
 
 ## [0.2.1] - 2023-01-29
 
-## Added
+### Added
 
 -   Reading Service, Email, and Username.
 -   Saving account information to file along with generated password.
+
+## [0.2.2] - 2023-01-31
+
+### Added
+
+-   Process to create new file if one doesn't already exist.
+
+### Changed
+
+-   Formating of data stored to password file.

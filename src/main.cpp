@@ -2,7 +2,7 @@
 #################################
 # Author: Mark Lewis            #
 # Date Started : 23 / 01 / 23   #
-# Last Edit : 30 / 01 / 23      #
+# Last Edit : 31 / 01 / 23      #
 #################################
 */
 
@@ -11,6 +11,7 @@
 #include <string>
 #include <ctime>
 #include <fstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -26,24 +27,61 @@ public:
 string GeneratePassword(const int);
 void WriteDataToFile(Entry currentEntry);
 
+void GetService(Entry currentEntry);
+void GetEmail(Entry currentEntry);
+void GetUsername(Entry currentEntry);
+void GetPassword(Entry curentEntry);
+
+void CreateNewFile();
+
 void test(); // Disposable test function for looping
 
 int main()
 {
     Entry currentEntry;
+    fstream PasswordTest;
 
-    int passLength = 0;
+    PasswordTest.open("PasswordTest.txt");
 
+    if (!PasswordTest)
+    {
+        cout << "An existing Password file was not found." << endl
+             << "Creating a new one..." << endl;
+        CreateNewFile();
+    }
     // Read the service and username / Emaill that the password is to be assigned to
+    GetService(currentEntry);
+    GetEmail(currentEntry);
+    GetUsername(currentEntry);
+    GetPassword(currentEntry);
+    WriteDataToFile(currentEntry);
 
-    cout << "Enter the service that this account belongs to." << endl;
+    test(); // temp test file
+
+    return 0;
+}
+
+void GetService(Entry currentEntry)
+{
+    cout << "Enter the service that this accout belongs to." << endl;
     cin >> currentEntry.Service;
+}
 
+void GetEmail(Entry currentEntry)
+{
     cout << "Enter the  email address used with this acount." << endl;
     cin >> currentEntry.Email;
+}
 
+void GetUsername(Entry currentEntry)
+{
     cout << "Enter the  usesrname for this acount." << endl;
     cin >> currentEntry.Username;
+}
+
+void GetPassword(Entry currentEntry)
+{
+    int passLength = 0;
 
     cout << "Enter the desired legnth for your password." << endl;
     cin >> passLength;
@@ -55,12 +93,38 @@ int main()
     else
     {
         currentEntry.Password = GeneratePassword(passLength);
-        WriteDataToFile(currentEntry);
+    }
+}
 
-        test();
+void CreateNewFile()
+{
+    fstream PasswordTest; // Temp name
+
+    PasswordTest.open("PasswordTest.txt", ios::out);
+    if (!PasswordTest)
+    {
+        cout << "Error: Unable to create a new file." << endl;
+    }
+    else
+    {
+        cout << "A new file has been created successfully." << endl;
     }
 
-    return 0;
+    PasswordTest << "+" << setfill('-') << setw(22)
+                 << "+" << setw(27)
+                 << "+" << setw(15)
+                 << "+" << setw(28)
+                 << "+" << endl;
+    PasswordTest << "|Service" << setfill(' ') << setw(20)
+                 << "|Email" << setw(30)
+                 << "|Username" << setw(15)
+                 << "|Password" << setw(20)
+                 << "|" << endl;
+    PasswordTest << "+" << setfill('-') << setw(22)
+                 << "+" << setw(27)
+                 << "+" << setw(15)
+                 << "+" << setw(28)
+                 << "+" << endl;
 }
 
 void WriteDataToFile(Entry currentEntry)
@@ -70,18 +134,24 @@ void WriteDataToFile(Entry currentEntry)
     PasswordTest.open("PasswordTest.txt", ios::app); // Open password file
     if (!PasswordTest)
     {
-        cout << "Error creating / openning file." << endl;
-    }
-    else
-    {
-        cout << "File creation / openning was successful!" << endl;
+        cout << "Error: Unable to open file." << endl;
     }
 
-    PasswordTest << "Service --> " << currentEntry.Service << endl
-                 << "Email --> " << currentEntry.Email << endl
-                 << "Username --> " << currentEntry.Username << endl
-                 << "Password --> " << currentEntry.Password << endl
-                 << "==============================================" << endl;
+    // PasswordTest << "Service --> " << currentEntry.Service << endl
+    //              << "Email --> " << currentEntry.Email << endl
+    //              << "Username --> " << currentEntry.Username << endl
+    //              << "Password --> " << currentEntry.Password << endl
+    //              << "==============================================" << endl;
+    PasswordTest << "|" << currentEntry.Service << setw(20)
+                 << "|" << currentEntry.Email << setw(30)
+                 << "|" << currentEntry.Username << setw(15)
+                 << "|" << currentEntry.Password << setw(20)
+                 << "|";
+    PasswordTest << "+" << setfill('-') << setw(22)
+                 << "+" << setw(27)
+                 << "+" << setw(15)
+                 << "+" << setw(28)
+                 << "+" << setfill(' ') << endl;
 
     PasswordTest.close(); // Close oppened password file
 }
@@ -112,10 +182,6 @@ string GeneratePassword(const int passLength)
 }
 
 // Create Account start
-
-// Generate passwords
-
-// store all information to a structured file.
 
 // Create account end
 
