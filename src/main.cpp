@@ -12,6 +12,7 @@
 #include <ctime>
 #include <fstream>
 #include <iomanip>
+#include <cstdio>
 
 using namespace std;
 
@@ -41,7 +42,7 @@ int main()
     Entry currentEntry;
     fstream PasswordTest;
 
-    PasswordTest.open("PasswordTest.txt");
+    PasswordTest.open("Accounts/PasswordTest.txt");
 
     if (!PasswordTest)
     {
@@ -100,7 +101,7 @@ void CreateNewFile()
 {
     fstream PasswordTest; // Temp name
 
-    PasswordTest.open("PasswordTest.txt", ios::out);
+    PasswordTest.open("Accounts/PasswordTest.txt", ios::out);
     if (!PasswordTest)
     {
         cout << "Error: Unable to create a new file." << endl;
@@ -131,17 +132,12 @@ void WriteDataToFile(Entry currentEntry)
 {
     fstream PasswordTest; // Temp file name
 
-    PasswordTest.open("PasswordTest.txt", ios::app); // Open password file
+    PasswordTest.open("Accounts/PasswordTest.txt", ios::app); // Open password file
     if (!PasswordTest)
     {
         cout << "Error: Unable to open file." << endl;
     }
 
-    // PasswordTest << "Service --> " << currentEntry.Service << endl
-    //              << "Email --> " << currentEntry.Email << endl
-    //              << "Username --> " << currentEntry.Username << endl
-    //              << "Password --> " << currentEntry.Password << endl
-    //              << "==============================================" << endl;
     PasswordTest << "|" << currentEntry.Service << setw(20)
                  << "|" << currentEntry.Email << setw(30)
                  << "|" << currentEntry.Username << setw(15)
@@ -156,7 +152,22 @@ void WriteDataToFile(Entry currentEntry)
     PasswordTest.close(); // Close oppened password file
 }
 
-void test()
+void DeleteFile()
+{
+    char filename[] = "Accounts/PasswordTest.txt";
+    int result = remove(filename);
+
+    if(result != 0)
+    {
+        cout << "Error: Unable to delete file..." << endl;
+    }
+    else
+    {
+        cout << "File successfully deleted..." << endl;
+    }
+}
+
+void test()//Temp function for looping while testing
 {
     main();
 }
