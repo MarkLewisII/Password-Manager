@@ -70,8 +70,35 @@ void GetService(Entry currentEntry)
 
 void GetEmail(Entry currentEntry)
 {
+    const char *emailDomains[5] = {"@gmail.com",
+                                   "@yahoo.com",
+                                   "@outlook.com",
+                                   "@hotmail.com",
+                                   "@hotmail.co.uk"};
+    int emailCheck;
+    char choice; 
+
     cout << "Enter the  email address used with this acount." << endl;
     cin >> currentEntry.Email;
+
+    for (int i = 0; i < sizeof(emailDomains); i++)
+    {
+        (currentEntry.Email.find(emailDomains[i]) != string::npos) ? emailCheck = 1 : emailCheck = 0;
+    }
+
+    if (emailCheck == 0)
+    {
+        cout << "Warning: Entered email address does not fit a recognised domain."
+             << "Would you like to proceed with current the entered email address or enter a new one?"
+             << "Enter new email? Y/N"
+             << endl;
+        cin >> choice;
+    }
+
+    if ((choice == 'y') || (choice == 'Y'))
+    {
+        GetEmail(currentEntry);
+    }
 }
 
 void GetUsername(Entry currentEntry)
@@ -157,7 +184,7 @@ void DeleteFile()
     char filename[] = "Accounts/PasswordTest.txt";
     int result = remove(filename);
 
-    if(result != 0)
+    if (result != 0)
     {
         cout << "Error: Unable to delete file..." << endl;
     }
@@ -167,7 +194,7 @@ void DeleteFile()
     }
 }
 
-void test()//Temp function for looping while testing
+void test() // Temp function for looping while testing
 {
     main();
 }
